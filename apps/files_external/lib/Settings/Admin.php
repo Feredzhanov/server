@@ -60,4 +60,13 @@ class Admin implements ISettings {
 	public function getPriority() {
 		return 40;
 	}
+
+	public function getName(): string {
+		return $this->l10n->t('External storage');
+	}
+
+	public function getAuthorizedAppConfig(): array {
+		// No app config keys require delegation for external storage.
+		return [];
+	}
 }
