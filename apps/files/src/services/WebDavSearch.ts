@@ -56,7 +56,7 @@ export async function searchNodes(query: string, { dir, signal }: SearchNodesOpt
 		 </d:select>
 		 <d:from>
 			 <d:scope>
-				 <d:href>/files/${user.uid}${dir || ''}</d:href>
+				 <d:href>/files/${user.uid}${dir ? escapeHTML(dir) : ''}</d:href>
 				 <d:depth>infinity</d:depth>
 			 </d:scope>
 		 </d:from>
