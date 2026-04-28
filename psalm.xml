@@ -222,5 +222,10 @@
 				<directory name="apps/*/tests" />
 			</errorLevel>
 		</InternalClass>
+		<PluginIssue name="ImpureStaticProperty">
+			<errorLevel type="suppress">
+				<directory name="lib/private/legacy" />
+			</errorLevel>
+		</PluginIssue>
 	</issueHandlers>
 </psalm>
