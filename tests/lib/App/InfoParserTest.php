@@ -52,11 +52,14 @@ class InfoParserTest extends TestCase {
 
 	public static function providesInfoXml(): array {
 		return [
-			['expected-info.json', 'valid-info.xml'],
-			[null, 'invalid-info.xml'],
-			['navigation-one-item.json', 'navigation-one-item.xml'],
-			['navigation-two-items.json', 'navigation-two-items.xml'],
-			['various-single-item.json', 'various-single-item.xml'],
+			'Only one value in each list' => ['appinfo-multi-once.json', 'appinfo-multi-once.xml'],
+			'Only one value in each list with attributes' => ['appinfo-attributes-once.json', 'appinfo-attributes-once.xml'],
+			'Multiple values in each list' => ['appinfo-multi-twice.json', 'appinfo-multi-twice.xml'],
+			'Valid info' => ['expected-info.json', 'valid-info.xml'],
+			'Invalid info' => [null, 'invalid-info.xml'],
+			'Navigation one item' => ['navigation-one-item.json', 'navigation-one-item.xml'],
+			'Navigation two items' => ['navigation-two-items.json', 'navigation-two-items.xml'],
+			'Various single item' => ['various-single-item.json', 'various-single-item.xml'],
 		];
 	}
 
