@@ -150,6 +150,10 @@ class AppManager implements IAppManager {
 	 * @return array<string,string> appId => enabled (may be 'yes', or a json encoded list of group ids)
 	 */
 	private function getEnabledAppsValues(): array {
+		if ($this->config->getSystemValueBool('installed', false) === false) {
+			return [];
+		}
+
 		if (!$this->enabledAppsCache) {
 			/** @var array<string,string> */
 			$values = $this->getAppConfig()->searchValues('enabled', false, IAppConfig::VALUE_STRING);
@@ -243,23 +247,16 @@ class AppManager implements IAppManager {
 		return array_keys($appsForGroups);
 	}
 
-	/**
-	 * Loads all apps
-	 *
-	 * @param string[] $types
-	 * @return bool
-	 *
-	 * This function walks through the Nextcloud directory and loads all apps
-	 * it can find. A directory contains an app if the file /appinfo/info.xml
-	 * exists.
-	 *
-	 * if $types is set to non-empty array, only apps of those types will be loaded
-	 */
 	#[\Override]
 	public function loadApps(array $types = []): bool {
 		if ($this->config->getSystemValueBool('maintenance', false)) {
 			return false;
 		}
+		if ($this->config->getSystemValueBool('installed', false) === false) {
+			// can only access the apps folder after installation, so we can't load any apps before that
+			return false;
+		}
+
 		// Load the enabled apps here
 		$apps = $this->getEnabledApps();
 

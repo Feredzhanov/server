@@ -200,7 +200,9 @@ interface IAppManager {
 	public function getInstalledApps();
 
 	/**
-	 * List all apps enabled, either for everyone or for specific groups only
+	 * List all apps enabled
+	 *
+	 * Including apps enabled for everyone and also including apps only enabled for specific groups.
 	 *
 	 * @return list<string>
 	 * @since 32.0.0
@@ -223,14 +225,12 @@ interface IAppManager {
 	/**
 	 * Loads all apps
 	 *
-	 * @param string[] $types
-	 * @return bool
-	 *
 	 * This function walks through the Nextcloud directory and loads all apps
 	 * it can find. A directory contains an app if the file `/appinfo/info.xml`
 	 * exists.
 	 *
-	 * if $types is set to non-empty array, only apps of those types will be loaded
+	 * @param string[] $types - If set, only apps of these types will be loaded
+	 * @return bool
 	 * @since 27.0.0
 	 */
 	public function loadApps(array $types = []): bool;
