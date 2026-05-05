@@ -128,7 +128,7 @@ class AppSettingsController extends Controller {
 	#[NoCSRFRequired]
 	public function getAppDiscoverJSON(): JSONResponse {
 		$data = $this->discoverFetcher->get(true);
-		return new JSONResponse(array_values($data));
+		return new JSONResponse($data);
 	}
 
 	/**
@@ -566,7 +566,7 @@ class AppSettingsController extends Controller {
 	 * @param array $groups
 	 * @return JSONResponse
 	 */
-	#[PasswordConfirmationRequired]
+	#[PasswordConfirmationRequired(strict: true)]
 	public function enableApps(array $appIds, array $groups = []): JSONResponse {
 		try {
 			$updateRequired = false;
