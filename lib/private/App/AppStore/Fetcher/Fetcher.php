@@ -12,6 +12,7 @@ use GuzzleHttp\Exception\ServerException;
 use OC\Files\AppData\Factory;
 use OCP\AppFramework\Http;
 use OCP\AppFramework\Utility\ITimeFactory;
+use OCP\Files\GenericFileException;
 use OCP\Files\IAppData;
 use OCP\Files\NotFoundException;
 use OCP\Http\Client\IClientService;
@@ -167,7 +168,11 @@ abstract class Fetcher {
 				}
 			}
 		} catch (NotFoundException $e) {
-			// File does not already exists
+			// File does not already exist
+			$file = $rootFolder->newFile($this->fileName);
+		} catch (GenericFileException $e) {
+			// Cache file exists but is unreadable (e.g. empty or corrupted) — recreate it
+			$this->logger->warning('Could not read appstore cache file, recreating it', ['app' => 'appstoreFetcher', 'exception' => $e]);
 			$file = $rootFolder->newFile($this->fileName);
 		}
 
